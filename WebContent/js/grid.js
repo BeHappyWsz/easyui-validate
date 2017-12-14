@@ -124,7 +124,7 @@ $(function(){
 					formLoadData(id);
 				}
 	        	$("#haha").textbox("setValue",d);
-	        	closeLoadingDiv();
+//	        	closeLoadingDiv();
 			},
 			onClose : function() {
 				win.window('destroy');

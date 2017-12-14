@@ -7,4 +7,3 @@ $.fn.datagrid.defaults.fit = true;
 $.fn.datagrid.defaults.pageList = [8, 10, 20];
 $.fn.datagrid.defaults.checkOnSelect = false;
 $.fn.datagrid.defaults.selectOnCheck = false;
-$.fn.datagrid.defaults.row = 30;

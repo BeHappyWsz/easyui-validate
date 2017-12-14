@@ -9,7 +9,7 @@ function gridSelectedValid(grid) {
 	if (row != null) {
 		return row;
 	} else {
-		$.messager.alert("提示", "您尚未选择数据！");
+		$.messager.alert("提示", "无选择数据");
 		return false;
 	}
 }
@@ -25,7 +25,7 @@ function gridCheckedValid(grid) {
 			return n.id;
 		}).join(",");
 	} else {
-		$.messager.alert("提示", "您尚未勾选数据！");
+		$.messager.alert("提示", "无勾选数据");
 		return false;
 	}
 }
