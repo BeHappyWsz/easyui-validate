@@ -206,5 +206,4 @@
 		
 		$.extend($.fn.validatebox.defaults.rules, rules);
 		$.extend($.fn.datebox.defaults, { validType:"isDate" });
-	
 })(jQuery);

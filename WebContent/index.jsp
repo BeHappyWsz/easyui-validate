@@ -3,12 +3,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/easyui/easyui.css">   
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/easyui/icon.css">   
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="https://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/validate.js"></script>
+<title>各种控件</title>
+<%@ include file = "head.jsp" %>
 </head>
 <body>
 	数字          <input name="number"    class="easyui-numberbox" data-options="min:0,max:500,precision:1,prefix:'a',suffix:'b'"/><br/>
