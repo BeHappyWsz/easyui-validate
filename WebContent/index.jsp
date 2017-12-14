@@ -31,12 +31,37 @@
 							panelHeight:80,
 							icons:[{iconCls:'icon-clear',handler : function(e) { $(e.data.target).combobox('clear'); }}]" />
 	<div class="easyui-mutiuploadbox" style="width:550px;height:100px"  border="true" boxBorder="false" boxHeight="30" isPreview="false"/>
-	按钮<a id="add"   class="easyui-linkbutton" data-options="plain:false,iconCls:'icon-ok'">新增</a>
+	按钮<a id="add"   class="easyui-linkbutton" data-options="plain:false,iconCls:'icon-ok'">新增</a><br/>
+	进度<a id="progress"   class="easyui-linkbutton" data-options="plain:false,iconCls:'icon-ok'">进度</a><br/>
 	按钮弹窗<a id="addwin" class="easyui-linkbutton" data-options="plain:false,iconCls:'icon-add'">弹窗</a>
 	
-	
+	下拉菜单<a href="javascript:void(0)" class="easyui-menubutton" data-options="menu:'#btn',iconCls:'icon-help',plain:false">帮助</a>   
+		  <div id="btn">  
+		  		<div id="btn1"  data-options="iconCls:'icon-help'">帮助1</div>  
+		  		<div class="menu-sep"></div>   
+		  		<div id="btn2"  data-options="iconCls:'icon-help'">帮助2</div>
+		  		<div class="menu-sep"></div>   
+		  		<div id="btn3"  data-options="iconCls:'icon-help'">帮助3</div>   
+		  		<div id="btn3"  data-options="iconCls:'icon-help'">帮助3</div>   
+		  		<div data-options="iconCls:'icon-help'"> 
+		  			<span>类型</span>   
+      				<div>   
+            			<div id="btn41">Word</div>   
+           			 	<div id="btn42">Excel</div>   
+            			<div id="btn43">PowerPoint</div>   
+       				</div>
+		  		</div>
+		  </div>
 	
 	<script type="text/javascript">
+		$("#btn").menu({
+		    onClick:function(item){
+		    	var id = item.id;
+		    	alert(id);
+		    	//其他操作
+		    }
+		});
+		
 		function showMsg(msg){//提出公用方法
 			$.messager.show({
 				msg : msg,
@@ -59,6 +84,17 @@
 			});
 		});
 		
+		$("#progress").bind("click",function(){
+			$.messager.progress({
+				title : "aaaa",
+				msg : "bbb",
+				text : "ccc",
+				interval: 100  //刷新频率ms
+			}); 
+			setTimeout(function(){
+				$.messager.progress("close");
+			}, 5000);//延迟测试
+		});
 		
 		$("#add").bind("click",function(){
 			$.messager.confirm("提示","欧克欧克",function(r){
