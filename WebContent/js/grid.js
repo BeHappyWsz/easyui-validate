@@ -1,61 +1,60 @@
 $(function(){
 	var URL = {
+			gridData : 	"json/datagrid.json",
+			formWin  :  "newWin.jsp"
 	};
 	
 	/** 模块名称* */
 	var modelName = "demo";
-	/** 主页列表* */
-	var grid = $("#grid");
 	
-	/** 主页查询表单* */
+	/** 查询表单+按钮* */
 	var queryForm = $("#qf");
-	
-	/** 渲染Grid* */
-	renderGrid();
-	
-	/** 绑定Grid操作按钮方法* */
-	bindGridToorBar();
-	
-	/** 绑定Grid操作按钮方法* */
 	bindSearchBtns();
 	
+	/** grid对象+渲染+按钮* */
+	var grid = $("#grid");
+	renderGrid();
+	bindGridToorBar();
+	
+	//渲染datagrid,固定数据无法分页。
 	function renderGrid(){
 		grid.datagrid({
 			url :URL.gridData,
-			onDblClickRow : function(index,row) {
-					openFormWin(row.id,row.userName);
+			onDblClickRow : function(index,row) {//双击事件
+					openFormWin(row.id,row.d);
+			},
+			queryParams:{//进行传参,此处只是模拟。
+				id :'FI-SW-01',
+				d  :'Large'
 			},
 			frozenColumns :[[
 				{field:"id",checkbox:true},
-				{field:"a",title:"a",align:"left",halign:"center",width:150},
-				{field:"b",title:"b",align:"left",halign:"center",width:350},
-				{field:"c",title:"c",align:"left",halign:"center",width:200},            
+				{field:"a",title:"a",align:"left",halign:"center",width:100},
+				{field:"b",title:"b",align:"left",halign:"center",width:100},
+				{field:"c",title:"c",align:"left",halign:"center",width:100},            
 			]],
 			columns:[[
-			    {field:"d",title:"d",align:"left",halign:"center",width:150},
-			    {field:"e",title:"e",align:"left",halign:"center",width:350},
-			    {field:"f",title:"f",align:"left",halign:"center",width:200},
-			    {field:"g",title:"g",align:"left",halign:"center",width:200},
-			    {field:"h",title:"h",align:"left",halign:"center",width:200},
-			    {field:"cz",title:"操作",align:"center",halign:"center",width:200,
-			    	formatter: function(value,row,index){
-			    		return "<a class='zlzxGridDownloadBtns' data-myfilename='"+row.fileName+"' data-myurl='"+row.fileInfoUrl+"' href='#' style='background-color:#36BDEF;color:#FFFFFF;'>文件下载</a>";
-					}
-			    }
+			    {field:"d",title:"d",align:"left",halign:"center",width:100},
+			    {field:"e",title:"e",align:"left",halign:"center",width:100},
+			    {field:"f",title:"f",align:"left",halign:"center",width:100},
+			    {field:"g",title:"g",align:"left",halign:"center",width:100},
+			    {field:"h",title:"h",align:"left",halign:"center",width:100},
+			    {field:"cz",title:"操作",align:"center",halign:"center",width:200,formatter: fmtCz}
 			]],
 			onLoadSuccess : function(){
-				$(".zlzxGridDownloadBtns").linkbutton({
+				$(".fmtBtn").linkbutton({
 					plain : true,
 					onClick : function(){
-						var url = $(this).data("myurl");
-						doDwonLoad(url);
+						var id = $(this).data("id");
+						doSomething(id);
 					}
 				});
-				$(".zlzxGridDownloadBtns").each(function(){
-					var fileName = $(this).data("myfilename");
+				//也可用只渲染为按钮
+				$(".fmtBtn").each(function(){
+					var d = $(this).data("d");
 					$(this).tooltip({    
 						position: 'right',    
-						content: "<span style='color:#fff'>"+fileName+"</span>",    
+						content: "<span style='color:#abc'>"+d+"</span>",    
 						onShow: function(){        
 							$(this).tooltip('tip').css({            
 								backgroundColor: '#666',            
@@ -68,53 +67,63 @@ $(function(){
 		})
 	}
 	
-	/** 绑定Grid操作按钮方法* */
+	/**
+	 * formatter方法
+	 */
+	function fmtCz(value,row,index){
+		return "<a class='fmtBtn' data-id='"+row.id+"' data-d='"+row.d+"' href='#' style='background-color:#36BDEF;color:#FFFFFF;'>点击</a>";
+	}
+	
+	/*
+	 * 进行其他操作
+	 */
+	function doSomething(id){
+		alert(id);
+	}
+	
+	/** grid按钮事件* */
 	function bindGridToorBar() {
-		$("a[data-action='ZLZX_ADDBTN']").bind("click",function(){
+		$("#addBtn").bind("click",function(){
 			openFormWin();
 		});
 		
-		$("a[data-action='ZLZX_UPDATEBTN']").bind("click",function(){
+		$("#updateBtn").bind("click",function(){
 			var row = gridSelectedValid(grid);
 			if(row){
-				openFormWin(row.id,row.userName);
+				openFormWin(row.id);
 			}
 		});
 		
-		$("a[data-action='ZLZX_DELETEBTN']").bind("click",function(){
+		$("#delBtn").bind("click",function(){
 			deleteByIds();
 		});
 	}
-	
+	/** 查询按钮事件 **/
 	function bindSearchBtns(){
+		
+		//带参数，也可序列化数组类型,load时可查看js中url中的参数
 		$("#query").unbind().bind("click",function(){
-			console.log(queryForm);
 			var formData = queryForm.serializeObject({transcript:"overlay"});
 			grid.datagrid("load",formData);
 		});
+		//查询form清空
 		$("#clear").unbind().bind("click",function(){
 			queryForm.form("clear");
 		});
 	}
 	
-	/**跳转到新增/修改页面**/
-	function openFormWin(id,userName){
-		var curUserName = $("#" + modelName + "_hide_curusername").val();
-		var title = id ? (userName == curUserName ? "文件上传[修改/查看]" : "文件上传[查看]" ): "文件上传[新增]";
-		var win = $("<div id='" + modelName + "_formWin'></div>").window({
-			title : title,
+	/**跳转到其他页面**/
+	function openFormWin(id,d){
+		var win = $("<div id='newWin'></div>").window({
+			title : id ? "查看" :"新增",
 			href :URL.formWin,
-			width : 600,
-			height : 392,
+			width : 500,
+			height : 302,
 			onLoad : function(){				
 	        	if(id){
 					formLoadData(id);
-					if(userName != curUserName){
-						$("#" + modelName + "_form_fileInfo").parent().find(".icon-add").remove();
-						$("#" + modelName + "_form_fileInfo").parent().find(".icon-remove").remove();
-						$("a[data-action='ZLZX_SAVEBTN']").addClass("hide");
-		        	}
 				}
+	        	$("#haha").textbox("setValue",d);
 	        	closeLoadingDiv();
 			},
 			onClose : function() {
@@ -123,65 +132,27 @@ $(function(){
 		});
 	}
 	
-	/**打开出入记录页面**/
-	function doDwonLoad(url){
-		//执行文件下载
-		window.open(ctx+url);
-	}
-	
-	/**
-	 * 编辑页面获取信息
-	 */
+	//查询数据并渲染展示到页面
 	function formLoadData(id){
 		$.ajax({
 			type : "get",
 			url :URL.getInfo,
 			data : {id:id},
 			success : function(data){
-				$("#" + modelName + "_form").form("load", data);
+				$("#newForm").form("load", data);
 			}
 		});
 	}
 	
-	/**
-	 * 删除
-	 */
+	//删除测试
 	function deleteByIds(){
-		var curUserName = $("#" + modelName + "_hide_curusername").val();
-		var rows = grid.datagrid("getChecked");
-		var idArray = new Array();
-		if (rows.length > 0) {
-			for(var i = 0; i < rows.length; i++){
-				var userName = rows[i].userName;
-				if(userName != curUserName){
-					showMsg("只能删除本人上传的数据！");
-					return false;
-				}
-				idArray.push(rows[i].id);
-			}
-			var ids = idArray.join(",");
-			$.messager.confirm("删除确认", Msg.delconfirm, function(r) {
-				if (r) {
-					$.ajax({
-						type : "post",
-						url : URL.deleteUrl,
-						data : {
-							ids : ids
-						},
-						success : function(data) {
-							/** 如果删除成功，刷新grid数据* */
-							if (data.success) {
-								$.messager.progress("close");
-								$("#" + modelName + "_grid").datagrid("reload");
-								$.messager.alert("系统提示：", Msg.delSuc);
-							}
-						}
-					});
+		var ids = gridCheckedValid(grid);
+		if(ids){
+			$.messager.confirm("提示","是否确定?",function(r){
+				if(r){
+					alert(ids);
 				}
 			});
-		} else {
-			$.messager.alert("提示", "您尚未勾选数据！");
-			return false;
 		}
 	}
 	
