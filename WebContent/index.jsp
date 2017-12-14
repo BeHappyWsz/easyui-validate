@@ -13,22 +13,19 @@
 	最长长度  <input name="length2" class="easyui-textbox"   data-options="validType:'maxLength[10]'"/><br/>
 	长度范围  <input name="length3" class="easyui-textbox"   data-options="validType:'length[5,10]'"/><br/>
 	多行输入 <input name="bz"       class="easyui-textbox" data-options="multiline:true,validType:['maxLength[250]'],required:false,width:550,height:70"/><br/>
-	日期1  <input name="date1" class="easyui-datebox"      data-options="editable:false,required:false,icons:[{iconCls:'icon-clear',handler : function(e) { $(e.data.target).datebox('clear'); }}]"/><br/>
+	日期1  <input name="date1" class="easyui-datebox"      data-options="editable:false,required:false,icons:[{iconCls:'icon-cross',handler : function(e) { $(e.data.target).datebox('clear'); }}]"/><br/>
 	日期2 <input name="date2" class="easyui-datetimebox"   data-options="editable:false,required:false,showSeconds: false" />
-	下拉框 <input class="easyui-combobox" name="mj"   
-					data-options="valueField:'code',
-							textField:'name',
+	下拉框 <input class="easyui-combobox" name="combox"   
+					data-options="valueField:'code',textField:'name',
 							data:[
 								{'code':'a','name':'a'},
 							    {'code':'b','name':'b'},
 								{'code':'c','name':'c'}
 							],
-							editable:true,
-							panelHeight:80,
-							icons:[{iconCls:'icon-clear',handler : function(e) { $(e.data.target).combobox('clear'); }}]" />
+							editable:true,panelHeight:80,icons:[{iconCls:'icon-cross',handler : function(e) { $(e.data.target).combobox('clear'); }}]" />
 	<div class="easyui-mutiuploadbox" style="width:550px;height:100px"  border="true" boxBorder="false" boxHeight="30" isPreview="false"/>
-	按钮<a id="add"   class="easyui-linkbutton" data-options="plain:false,iconCls:'icon-ok'">新增</a><br/>
-	进度<a id="progress"   class="easyui-linkbutton" data-options="plain:false,iconCls:'icon-ok'">进度</a><br/>
+	按钮<a id="add"   class="easyui-linkbutton" data-options="plain:false,iconCls:'icon-accept'">新增</a><br/>
+	进度<a id="progress"   class="easyui-linkbutton" data-options="plain:false,iconCls:'icon-accept'">进度</a><br/>
 	按钮弹窗<a id="addwin" class="easyui-linkbutton" data-options="plain:false,iconCls:'icon-add'">弹窗</a>
 	
 	下拉菜单<a href="javascript:void(0)" class="easyui-menubutton" data-options="menu:'#btn',iconCls:'icon-help',plain:false">帮助</a>   
@@ -68,11 +65,11 @@
 		$("#addwin").bind("click",function(){
 			var win = $("<div id='win'></div>").window({
 				title : "新增",
-				width : 1000,
-				height: 243,
-			  //href :URL.formWin,
+				width : 300,
+				height: 200,
+			    href : "newWin.jsp",
 				onLoad : function(){
-					//closeLoadingDiv();
+					//加载其他东西
 				},
 				onClose : function(){
 					win.window('destroy');
