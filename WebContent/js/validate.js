@@ -21,6 +21,12 @@
 				},
 				message : '最大长度限制为{0}个字符!'
 			},
+			minLength : { // 判断最小长度
+				validator : function(value, param) {
+					return value.length >= param[0];
+				},
+				message : '最小长度限制为{0}个字符!'
+			},
 			fixedLengthRybh : { // 判断最大长度
 				validator : function(value, param) {
 					return value.length == param[0];
