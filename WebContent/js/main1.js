@@ -12,7 +12,10 @@ $(function() {
 			kidWidth : "180",
 			height : "auto",
 			onSelect : function(node) {
-				openLeftWin(node);
+				var isLeaf = $(this).tree('isLeaf',node.target);
+				if(isLeaf){
+					openLeftWin(node);
+				}
 			}
 		});
 	}
@@ -20,14 +23,14 @@ $(function() {
 	/** * */
 	function openLeftWin(node) {
 		var tabName = node.text;
-		if ($("div[data-id=mainTabs]").tabs("exists", tabName)) {
+		if ($("#mainTabs").tabs("exists", tabName)) {
 			// 如果已存在，选中
-			$("div[data-id=mainTabs]").tabs("select", tabName);
+			$("#mainTabs").tabs("select", tabName);
 		} else {
 			if(null != node.url && undefined != node.url && "" != node.url && "undefined" != node.url ){
 				
 			}
-			$("div[data-id=mainTabs]").tabs("add", {
+			$("#mainTabs").tabs("add", {
 				title : tabName,
 				selected : true,
 				closable : true,
@@ -35,7 +38,7 @@ $(function() {
 				tools : [ {
 					iconCls : "icon-page_refresh",
 					handler : function() {
-						var currentTab = $("div[data-id=mainTabs]").tabs('getSelected');
+						var currentTab = $("#mainTabs").tabs('getSelected');
 						RefreshTab(currentTab);
 					}
 				} ],
@@ -58,23 +61,51 @@ $(function() {
 	}
 
 	$("#mainTabs").tabs({
-        onContextMenu:function(e, title,index){
+        onContextMenu:function(e,title,index){
+//            var subtitle = $(this).text();
+//            $("#mainTabs").tabs('select', subtitle);
             e.preventDefault();
-            if(index>0){
-                $("#tab-tools").menu('show', {
-                    left: e.pageX,
-                    top: e.pageY
-                }).data("tabTitle", title);
-            }
+            $("#tab-tools").menu('show', {
+                left : e.pageX,
+                top : e.pageY
+            });
         }
     });
 	
 	$("#tab-tools").menu({
-        onClick : function (item) {
-            closeTab(this, item.name);
+        onClick : function (node) {
+            closeTab(this, node.id);
         }
     });
-	function closeTab(menu, type) {
-		alert("aa");
-	}
+	
+	//删除Tabs
+    function closeTab(menu, id){
+        var allTabs = $("#mainTabs").tabs('tabs');
+        var allTabtitle = [];
+        $.each(allTabs,function(i,n){
+            var opt=$(n).panel('options');
+            if(opt.closable)
+                allTabtitle.push(opt.title);
+        });
+        console.log(menu);
+        switch (id){
+            case 1 :
+                $("#mainTabs").tabs("close", 1);
+                break;
+            case 2 :
+                for(var i=0;i<allTabtitle.length;i++){
+                    $("#mainTabs").tabs('close', allTabtitle[i]);
+                }
+                break;
+            case 3 :
+        
+            break;
+            case 4 :
+        
+            break;
+            case 5 :
+        
+            break;
+        }
+    }
 });
