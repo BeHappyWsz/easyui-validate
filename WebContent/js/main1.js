@@ -46,24 +46,23 @@ $(function() {
 
 				}
 			});
-			
-			function RefreshTab(currentTab) {
-				var url = $(currentTab.panel('options')).attr('href');
-				$('#tabs').tabs('update', {
-					tab : currentTab,
-					options : {
-						href : url
-					}
-				});
-				currentTab.panel('refresh');
-			}
+			//
 		}
 	}
 
+	function RefreshTab(currentTab) {
+		var url = $(currentTab.panel('options')).attr('href');
+		$('#tabs').tabs('update', {
+			tab : currentTab,
+			options : {
+				href : url
+			}
+		});
+		currentTab.panel('refresh');
+	}
+	
 	$("#mainTabs").tabs({
         onContextMenu:function(e,title,index){
-//            var subtitle = $(this).text();
-//            $("#mainTabs").tabs('select', subtitle);
             e.preventDefault();
             $("#tab-tools").menu('show', {
                 left : e.pageX,
@@ -80,32 +79,53 @@ $(function() {
 	
 	//删除Tabs
     function closeTab(menu, id){
-        var allTabs = $("#mainTabs").tabs('tabs');
-        var allTabtitle = [];
-        $.each(allTabs,function(i,n){
-            var opt=$(n).panel('options');
-            if(opt.closable)
-                allTabtitle.push(opt.title);
-        });
-        console.log(menu);
         switch (id){
-            case 1 :
-                $("#mainTabs").tabs("close", 1);
+            case '1' ://刷新
+            	var tab = $("#mainTabs").tabs('getSelected');
+            	RefreshTab(tab);
                 break;
-            case 2 :
-                for(var i=0;i<allTabtitle.length;i++){
-                    $("#mainTabs").tabs('close', allTabtitle[i]);
+            case '2' ://关闭当前标签
+            	var tab = $("#mainTabs").tabs('getSelected');
+                var index = $("#mainTabs").tabs('getTabIndex',tab);
+                $("#mainTabs").tabs("close", index);
+                break;
+            case '3' ://关闭非当前标签
+                var tablist = $("#mainTabs").tabs('tabs');
+                var tab = $("#mainTabs").tabs('getSelected');
+                var index = $("#mainTabs").tabs('getTabIndex',tab);
+                for(var i=tablist.length-1;i>index;i--){
+                    $("#mainTabs").tabs('close',i);
+                }
+                var num = index-1;
+                for(var i=num;i>=0;i--){
+                    $("#mainTabs").tabs('close',0);
                 }
                 break;
-            case 3 :
-        
-            break;
-            case 4 :
-        
-            break;
-            case 5 :
-        
-            break;
+            case '4' ://关闭左侧
+            	var tablist = $("#mainTabs").tabs('tabs');
+                var tab = $("#mainTabs").tabs('getSelected');
+                var index = $("#mainTabs").tabs('getTabIndex',tab);
+                var num = index-1;
+                for(var i=num;i>=0;i--){
+                    $("#mainTabs").tabs('close',0);
+                }
+                break;
+            case '5' ://关闭右侧
+            	var tablist = $("#mainTabs").tabs('tabs');
+                var tab = $("#mainTabs").tabs('getSelected');
+                var index = $("#mainTabs").tabs('getTabIndex',tab);
+                for(var i=tablist.length-1;i>index;i--){
+                    $("#mainTabs").tabs('close',i);
+                }
+            	break;
+            case '6'://关闭所有
+            	var tablist = $("#mainTabs").tabs('tabs');
+                for(var i=tablist.length-1;i>=0;i--){
+                    $("#mainTabs").tabs("close", i);
+                }
+            	break;
+            default:
+            	
         }
     }
 });

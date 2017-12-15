@@ -24,10 +24,15 @@
 	</div>
 
 	<div id="tab-tools" class="easyui-menu" style="width:100px;">
-		<div id="1" iconCls="icon-page-refresh">刷新1</div>
+		<div id="1" data-options="iconCls:'icon-help'">刷新</div>
 		<div class="menu-sep"></div>
-		<div id="2" iconCls="icon-close">关闭当前标签</div>
-		<div id="3" iconCls="icon-close">关闭非当前标签</div>
+		<div id="2" data-options="iconCls:'icon-help'">关闭当前标签</div>
+		<div id="3" data-options="iconCls:'icon-help'">关闭非当前标签</div>
+		<div class="menu-sep"></div>
+		<div id="4" data-options="iconCls:'icon-help'">关闭左侧标签</div>
+		<div id="5" data-options="iconCls:'icon-help'">关闭右侧标签</div>
+		<div class="menu-sep"></div>
+		<div id="6" iconCls="icon-help">关闭所有标签</div>
 	</div>	
 </body>
 </html>
