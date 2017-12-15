@@ -4,45 +4,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>dataGrid</title>
-<%@ include file = "head.jsp" %>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/grid.js"></script>
 </head>
+<%@ include file = "head.jsp" %>
 <body>
+<!-- 其他页面调用时,确保引入的js文件在body内,否则不会加载引入相关 文件 -->
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/grid.js"></script>
 	<div class="easyui-layout" data-options="fit:true">
 		<div data-options="region:'west',border:true" title="菜单" style="width:200px;">
-					<ul class="easyui-tree">
-			<li>
-				<span>My Documents</span>
-				<ul>
-					<li data-options="state:'closed'">
-						<span>Photos</span>
-						<ul>
-							<li>
-								<span>Friend</span>
-							</li>
-							<li>
-								<span>Wife</span>
-							</li>
-							<li>
-								<span>Company</span>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<span>Program Files</span>
-						<ul>
-							<li>Intel</li>
-							<li>Java</li>
-							<li>Microsoft Office</li>
-							<li>Games</li>
-						</ul>
-					</li>
-					<li>index.html</li>
-					<li>about.html</li>
-					<li>welcome.html</li>
-				</ul>
-			</li>
-		</ul>
 			
 		</div>
 		<div data-options="region:'center',border:false" title="">

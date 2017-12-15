@@ -1,16 +1,20 @@
 [{
 	"id":1,
 	"text":"My Documents",
+	"iconCls":"icon-page",   "这是注释(注意逗号)":"自定义tree图标",
 	"children":[{
 		"id":11,
 		"text":"Photos",
-		"state":"closed",
+		"iconCls":"icon-page", "这是注释(注意逗号)":"自定义tree图标",
 		"children":[{
 			"id":111,
-			"text":"Friend"
+			"text":"Friend",
+			"iconCls":"icon-page",
+			"page":"newWin.jsp",  "这是注释(注意逗号)":"自定义点击的目标页面"
 		},{
 			"id":112,
-			"text":"Wife"
+			"text":"Wife",
+			"page":"grid.jsp",  "这是注释(注意逗号)":"自定义点击的目标页面"
 		},{
 			"id":113,
 			"text":"Company"
@@ -18,6 +22,8 @@
 	},{
 		"id":12,
 		"text":"Program Files",
+		"iconCls":"icon-page", 
+		"state":"closed",
 		"children":[{
 			"id":121,
 			"text":"Intel"
