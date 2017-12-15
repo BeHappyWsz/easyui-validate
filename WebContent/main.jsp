@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file = "head.jsp" %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/index.css">   
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/main.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/main1.js"></script>
 <title>首页面</title>
 </head>
 <body>
@@ -19,7 +19,7 @@
 		</div>
 		<!-- 主要内容 -->
 		<div data-options="region:'center',split:true"><!--  -->
-			<div data-id="mainTabs" class="easyui-tabs" data-options="tools:'div[data-id=simpleweb-system-tab-tools]',toolPosition:'right',fit:true,border:false">
+			<div data-id="mainTabs" class="easyui-tabs" data-options="tools:'#tab-tools',toolPosition:'right',fit:true,border:false">
 				
 			</div>
 		</div>
@@ -38,7 +38,7 @@
 	</div>
 
 
-	<div data-id="simpleweb-system-tab-tools-mm" style="width:100px;">
+	<div id="tab-tools" style="width:100px;">
 		<div name="refreshPanel" iconCls="icon-standard-arrow-refresh">刷新</div>
 		<div class="menu-sep"></div>
 		<div name="closeCurrent" iconCls="icon-standard-application-form-delete">关闭当前标签</div>
@@ -50,7 +50,7 @@
 		<div name="closeAll" iconCls="icon-standard-cross">全部关闭</div>
 	</div>	
 	
-	<div data-id="simpleweb_system_profile_window_dialogbutton">
+	<div data-id="window_dialogbutton">
 		<a data-action="save"  href="javascript:void(-1);" class="easyui-linkbutton" iconCls='icon-standard-page-save'>保存</a>  
 		<a data-action="close" href="javascript:void(-1);" class="easyui-linkbutton" iconCls='icon-standard-cancel'>关闭</a> 
 	</div>	

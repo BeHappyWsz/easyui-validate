@@ -19,30 +19,31 @@ $(function() {
 
 	/** * */
 	function openLeftWin(node) {
-		var tabName = node.text+"<input type='hidden' data-mytabcode='"+node.code+"'/>";
-		var tabCode = node.code;
-		if ($("input[data-mytabcode='"+tabCode+"']").size() != 0) {
+		var tabName = node.text;
+		if ($("div[data-id=mainTabs]").tabs("exists", tabName)) {
 			// 如果已存在，选中
 			$("div[data-id=mainTabs]").tabs("select", tabName);
 		} else {
+			if(null != node.url && undefined != node.url && "" != node.url && "undefined" != node.url ){
+				
+			}
 			$("div[data-id=mainTabs]").tabs("add", {
 				title : tabName,
 				selected : true,
 				closable : true,
 				href : "newWin.jsp",
 				tools : [ {
-					iconCls : "icon-mini-refresh",
+					iconCls : "icon-page_refresh",
 					handler : function() {
 						var currentTab = $("div[data-id=mainTabs]").tabs('getSelected');
 						RefreshTab(currentTab);
 					}
 				} ],
-				onDestroy : function(){
-					
-				},
 				onLoad : function() {
+
 				}
 			});
+			
 			function RefreshTab(currentTab) {
 				var url = $(currentTab.panel('options')).attr('href');
 				$('#tabs').tabs('update', {
@@ -56,4 +57,24 @@ $(function() {
 		}
 	}
 
+	$("#mainTabs").tabs({
+        onContextMenu:function(e, title,index){
+            e.preventDefault();
+            if(index>0){
+                $("#tab-tools").menu('show', {
+                    left: e.pageX,
+                    top: e.pageY
+                }).data("tabTitle", title);
+            }
+        }
+    });
+	
+	$("#tab-tools").menu({
+        onClick : function (item) {
+            closeTab(this, item.name);
+        }
+    });
+	function closeTab(menu, type) {
+		alert("aa");
+	}
 });
